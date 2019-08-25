@@ -2,24 +2,39 @@ package main
 
 import (
 	"Graph_algo/Adj"
-	"Graph_algo/DFS"
+	"Graph_algo/search"
 	"fmt"
 	"io"
 )
 
-func main()  {
+func main() {
 	var (
 		mar *Adj.Hash
-		cc *DFS.CC
+		//cc *DFS.CC
+		cycleDetection *search.Cycle
+		mar2           *Adj.Hash
 	)
 	mar = &Adj.Hash{}
-	if err:=mar.ReadFromFile("g2.txt");err!=nil && err!=io.EOF{
+	mar2 = &Adj.Hash{}
+	if err := mar.ReadFromFile("g2_noCycle.txt"); err != nil && err != io.EOF {
 		panic(err)
 	}
-	cc = new(DFS.CC)
-	cc.Init(mar)
-	fmt.Println(cc.Cccount())
-	fmt.Println(mar)
-	fmt.Println(mar.LinkedVertex(1))
-	fmt.Println(mar.Degree(1))
+	if err := mar2.ReadFromFile("g2.txt"); err != nil && err != io.EOF {
+		panic(err)
+	}
+	//single = new(search.SingleSource)
+	//single.Init(mar,0)
+	//fmt.Println(single.Pre())
+	//fmt.Println("0 -> 6 : ",single.Path(6))
+	//path = &search.Path{
+	//	T:5,
+	//	SingleSource:single,
+	//}
+	//fmt.Println(path.Path())
+	//fmt.Println(path.Visited())
+	cycleDetection = new(search.Cycle)
+	cycleDetection.Init(mar)
+	fmt.Println(cycleDetection.HasCycle())
+	cycleDetection.Init(mar2)
+	fmt.Println(cycleDetection.HasCycle())
 }
